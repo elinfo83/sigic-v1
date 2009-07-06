@@ -4,11 +4,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import mem.exceptions.DepartmentAlreadyRegisteredException;
-import mem.exceptions.DepartmentNoRegisteredException;
-import mem.exceptions.InvalidDateException;
+import mem.exception.DepartmentAlreadyRegisteredException;
+import mem.exception.DepartmentNoRegisteredException;
+import mem.exception.InvalidDateException;
 import mem.interfaces.IRepositoryDepartment;
-import mem.model.department.Department;
+import mem.model.departamento.Department;
 
 public class CadastroDepartment {
 	private IRepositoryDepartment repository;

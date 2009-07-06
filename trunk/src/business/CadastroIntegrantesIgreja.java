@@ -4,9 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import mem.exceptions.InvalidDateException;
-import mem.exceptions.MemberAlreadyRegisteredException;
-import mem.exceptions.MemberNoRegisterException;
+import mem.exception.InvalidDateException;
+import mem.exception.MemberAlreadyRegisteredException;
+import mem.exception.MemberNoRegisterException;
 import mem.interfaces.IRepositoryIntegrantesIgreja;
 import mem.model.integrantesIg.IntegranteIgreja;
 
