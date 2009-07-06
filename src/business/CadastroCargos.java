@@ -4,9 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 
-import mem.exceptions.CargoAlreadyRegistredException;
-import mem.exceptions.CargoNoRegisteredException;
-import mem.exceptions.InvalidDateException;
+import mem.exception.CargoAlreadyRegistredException;
+import mem.exception.CargoNoRegisteredException;
+import mem.exception.InvalidDateException;
 import mem.interfaces.IRepositoryCargos;
 import mem.model.cargo.Cargo;
 
