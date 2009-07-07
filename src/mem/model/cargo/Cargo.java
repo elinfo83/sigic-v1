@@ -1,6 +1,7 @@
 package mem.model.cargo;
 
 import mem.model.documentos.Minuta;
+import mem.model.integrantesIg.IntegranteIgreja;
 
 
 
@@ -9,6 +10,7 @@ public class Cargo {
 	
 	private String nome;
 	private Minuta minuta; 
+	private IntegranteIgreja ocupante;
 
 	
 	
@@ -41,4 +43,13 @@ public class Cargo {
 		this.minuta = minuta;
 	}
 	
+
+	public IntegranteIgreja getOcupante() {
+		return ocupante;
+	}
+
+	public void setOcupante(IntegranteIgreja ocupante) {
+		this.ocupante = ocupante;
+	}
+
 }

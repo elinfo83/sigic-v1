@@ -18,7 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -103,11 +102,7 @@ public class PanelIntegrantesIgreja extends JPanel{
 	private JScrollPane jsp_Historico = null;
 	private JTextArea jta_historico = null;
 	private JLabel jl_tracocep = null;
-	private JPanel jp_cargos = null;
-	private JList jl_cargos = null;
 	private ButtonGroup buttonGroup;  //  @jve:decl-index=0:
-	private JButton jb_addCargo = null;
-	private JButton jb_removerCargo = null;
 	private Facade facade;
 	private JTextField jtf_diaAniversario = null;
 	private JTextField jtf_diaBatismo = null;
@@ -164,7 +159,6 @@ public class PanelIntegrantesIgreja extends JPanel{
 		this.add(getJb_procurarFoto(), null);
 		this.add(getJsp_Historico(), null);
 		this.add(getJp_photo(), null);
-		this.add(getJp_cargos(), null);
 		
 	}
 	
@@ -224,7 +218,8 @@ public class PanelIntegrantesIgreja extends JPanel{
 	private JButton getJb_fechar() {
 		if (jb_confirmar == null) {
 			jb_confirmar = new JButton();
-			jb_confirmar.setBounds(new java.awt.Rectangle(346,19,143,23));
+			jb_confirmar.setBounds(new Rectangle(346, 19, 143, 31));
+			jb_confirmar.setIcon(new ImageIcon("D:/workspace/sigic-v1.1/imagens/confirm1.png"));
 			jb_confirmar.setText("Cadastrar");
 			jb_confirmar.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -367,7 +362,8 @@ public class PanelIntegrantesIgreja extends JPanel{
 	private JButton getJb_confirmar() {
 		if (jb_cancelar == null) {
 			jb_cancelar = new JButton();
-			jb_cancelar.setBounds(new java.awt.Rectangle(20,19,143,23));
+			jb_cancelar.setBounds(new Rectangle(20, 19, 143, 31));
+			jb_cancelar.setIcon(new ImageIcon("D:/workspace/sigic-v1.1/imagens/sair.png"));
 			jb_cancelar.setText("Fechar");
 			jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -1081,84 +1077,6 @@ public class PanelIntegrantesIgreja extends JPanel{
 		return jta_historico;
 	}
 
-	/**
-	 * This method initializes jp_cargos	
-	 * 	
-	 * @return javax.swing.JPanel	
-	 */
-	private JPanel getJp_cargos() {
-		if (jp_cargos == null) {
-			jp_cargos = new JPanel();
-			jp_cargos.setLayout(null);
-			jp_cargos.setBounds(new Rectangle(271, 415, 209, 158));
-			jp_cargos.setBorder(BorderFactory.createTitledBorder(null, "Cargos Ocupados", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Dialog", Font.BOLD, 12), Color.black));
-			jp_cargos.setBackground(new Color(225, 230, 232));
-			jp_cargos.add(getJl_cargos(), null);
-			jp_cargos.add(getJb_removerCargo(), null);
-			jp_cargos.add(getJb_addCargo(), null);
-		}
-		return jp_cargos;
-	}
-
-	/**
-	 * This method initializes jl_cargos	
-	 * 	
-	 * @return javax.swing.JList	
-	 */
-	private JList getJl_cargos() {
-		if (jl_cargos == null) {
-			jl_cargos = new JList();
-			jl_cargos.setBounds(new Rectangle(18, 22, 161, 92));
-		}
-		return jl_cargos;
-	}
-	
-	public void updateJlistCargos(){
-		getJl_cargos().setListData(this.cargos.toArray());
-	}
-
-	/**
-	 * This method initializes jb_addCargo	
-	 * 	
-	 * @return javax.swing.JButton	
-	 */
-	private JButton getJb_addCargo() {
-		if (jb_addCargo == null) {
-			jb_addCargo = new JButton();
-			jb_addCargo.setText("Adicionar");
-			jb_addCargo.setBounds(new Rectangle(10, 127, 88, 23));
-			jb_addCargo.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					addCargos();
-				}
-			});
-		}
-		return jb_addCargo;
-	}
-
-	private void addCargos(){
-		CargosDisponiveis cargosDisponiveis = new CargosDisponiveis(this,this.facade);
-		cargosDisponiveis.setVisible(true);
-	}
-	/**
-	 * This method initializes jb_removerCargo	
-	 * 	
-	 * @return javax.swing.JButton	
-	 */
-	private JButton getJb_removerCargo() {
-		if (jb_removerCargo == null) {
-			jb_removerCargo = new JButton();
-			jb_removerCargo.setBounds(new Rectangle(108, 128, 88, 23));
-			jb_removerCargo.setText("Remover");
-			jb_removerCargo.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					System.out.println("actionPerformed()"); 
-				}
-			});
-		}
-		return jb_removerCargo;
-	}
-
 	
 	private JTextField getJtf_diaAniversario() {
 		if (jtf_diaAniversario == null) {
@@ -1377,7 +1295,8 @@ public class PanelIntegrantesIgreja extends JPanel{
 	private JButton getJb_limpar() {
 		if (jb_limpar == null) {
 			jb_limpar = new JButton();
-			jb_limpar.setBounds(new java.awt.Rectangle(183,19,143,23));
+			jb_limpar.setBounds(new Rectangle(183, 19, 143, 31));
+			jb_limpar.setIcon(new ImageIcon("D:/workspace/sigic-v1.1/imagens/lixeira.png"));
 			jb_limpar.setText("Limpar");
 			jb_limpar.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {

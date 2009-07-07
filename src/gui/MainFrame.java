@@ -3,6 +3,7 @@ package gui;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -13,7 +14,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import util.ConstantsSystem;
+
 import facade.Facade;
+import java.awt.Toolkit;
 
 public class MainFrame extends JFrame {
 
@@ -37,6 +41,9 @@ public class MainFrame extends JFrame {
 	private JMenuItem jmi_aniversariantes = null;
 	private JMenuItem jmi_diretoria = null;
 	private JMenuItem jmi_integrantesIgreja = null;
+	private JMenuItem jmi_help = null;
+	private JMenuItem jmi_Config = null;
+	private JMenuItem jmi_diretorias = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -54,6 +61,7 @@ public class MainFrame extends JFrame {
 		if (jmi_viewDepartments == null) {
 			jmi_viewDepartments = new JMenuItem();
 			jmi_viewDepartments.setText("Departamentos");
+			jmi_viewDepartments.setIcon(new ImageIcon(ConstantsSystem.PATH_IMAGES+"buscar.png"));
 			jmi_viewDepartments.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					addTab(new ViewDepartment(getJTabbedPane(),getFacade()), "Visualizar Departamentos");
@@ -72,6 +80,7 @@ public class MainFrame extends JFrame {
 		if (jmi_aniversariantes == null) {
 			jmi_aniversariantes = new JMenuItem();
 			jmi_aniversariantes.setText("Aniversariantes");
+			jmi_aniversariantes.setIcon(new ImageIcon(ConstantsSystem.PATH_IMAGES+"buscar.png"));
 			jmi_aniversariantes.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					addTab(new Aniversariantes(getFacade(),getJTabbedPane()),"Aniversariantes do Período");
@@ -90,6 +99,7 @@ public class MainFrame extends JFrame {
 		if (jmi_diretoria == null) {
 			jmi_diretoria = new JMenuItem();
 			jmi_diretoria.setText("Diretorias");
+			jmi_diretoria.setIcon(new ImageIcon(ConstantsSystem.PATH_IMAGES+"buscar.png"));
 		}
 		return jmi_diretoria;
 	}
@@ -103,6 +113,7 @@ public class MainFrame extends JFrame {
 		if (jmi_integrantesIgreja == null) {
 			jmi_integrantesIgreja = new JMenuItem();
 			jmi_integrantesIgreja.setText("Integrantes Igreja");
+			jmi_integrantesIgreja.setIcon(new ImageIcon(ConstantsSystem.PATH_IMAGES+"buscar.png"));
 			jmi_integrantesIgreja.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					addTab(new ProcurarMembro(getFacade(),getJTabbedPane()),"Procurar Integrante Igreja");
@@ -110,6 +121,53 @@ public class MainFrame extends JFrame {
 			});
 		}
 		return jmi_integrantesIgreja;
+	}
+
+	/**
+	 * This method initializes jmi_help	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getJmi_help() {
+		if (jmi_help == null) {
+			jmi_help = new JMenuItem();
+			jmi_help.setText("Suporte");
+			jmi_help.setIcon(new ImageIcon(ConstantsSystem.PATH_IMAGES + "help.png"));
+		}
+		return jmi_help;
+	}
+
+	/**
+	 * This method initializes jmi_Config	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getJmi_Config() {
+		if (jmi_Config == null) {
+			jmi_Config = new JMenuItem();
+			jmi_Config.setText("Configurações");
+			jmi_Config.setIcon(new ImageIcon(ConstantsSystem.PATH_IMAGES + "config.png"));
+		}
+		return jmi_Config;
+	}
+
+	/**
+	 * This method initializes jmi_diretorias	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getJmi_diretorias() {
+		if (jmi_diretorias == null) {
+			jmi_diretorias = new JMenuItem();
+			jmi_diretorias.setText("Diretorias");
+			jmi_diretorias.setIcon(new ImageIcon(ConstantsSystem.PATH_IMAGES+"diretorias.png"));
+			jmi_diretorias.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+				}
+			});
+		}
+		return jmi_diretorias;
 	}
 
 	public static void main(String[] args) {
@@ -142,6 +200,7 @@ public class MainFrame extends JFrame {
 		}
 		SwingUtilities.updateComponentTreeUI(this);
 		this.setResizable(false);
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage("D:/workspace/sigic-v1.1/imagens/logop4.png"));
 		this.setBackground(new Color(225, 230, 232));
 		this.setBounds(new java.awt.Rectangle(0,0,1036,750));
 		this.setJMenuBar(getMenuprincipal());
@@ -202,6 +261,7 @@ public class MainFrame extends JFrame {
 			jm_cadastros.add(getJmi_membros());
 			jm_cadastros.add(getJMenuItem());
 			jm_cadastros.add(getJmi_departamentos());
+			jm_cadastros.add(getJmi_diretorias());
 		}
 		return jm_cadastros;
 	}
@@ -234,6 +294,7 @@ public class MainFrame extends JFrame {
 			jmi_membros = new JMenuItem();
 			jmi_membros.setText("Membros");
 			jmi_membros.setToolTipText("cadastra membros");
+			jmi_membros.setIcon(new ImageIcon(ConstantsSystem.PATH_IMAGES+"member.png"));
 			jmi_membros.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					addTab(new PanelIntegrantesIgreja(getFacade(),getJTabbedPane()),"Cadastrar Membro");
@@ -257,6 +318,7 @@ public class MainFrame extends JFrame {
 			jmi_departamentos = new JMenuItem();
 			jmi_departamentos.setText("Departamentos");
 			jmi_departamentos.setToolTipText("cadastra departamentos");
+			jmi_departamentos.setIcon(new ImageIcon(ConstantsSystem.PATH_IMAGES+"departamentos.png"));
 			jmi_departamentos.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					addTab(new PanelDepartamentos(getFacade(),getJTabbedPane()), "Cadastrar Deoartamento");
@@ -309,6 +371,13 @@ public class MainFrame extends JFrame {
 	private JMenuItem getJm_jovens() {
 		if (jm_jovens == null) {
 			jm_jovens = new JMenuItem();
+			jm_jovens.setText("Créditos");
+			jm_jovens.setIcon(new ImageIcon(ConstantsSystem.PATH_IMAGES+"info.png"));
+			jm_jovens.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+				}
+			});
 		}
 		return jm_jovens;
 	}
@@ -322,6 +391,7 @@ public class MainFrame extends JFrame {
 		if (jMenuItem == null) {
 			jMenuItem = new JMenuItem();
 			jMenuItem.setText("Cargos");
+			jMenuItem.setIcon(new ImageIcon(ConstantsSystem.PATH_IMAGES+"cargos.png"));
 			jMenuItem.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					addTab(new PanelCargos(getFacade(),getJTabbedPane()),"Cadastrar Cargo");
@@ -355,6 +425,7 @@ public class MainFrame extends JFrame {
 		if (jmi_sair == null) {
 			jmi_sair = new JMenuItem();
 			jmi_sair.setText("Sair");
+			jmi_sair.setIcon(new ImageIcon(ConstantsSystem.PATH_IMAGES+"sair.png"));
 			jmi_sair.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					closed();
@@ -381,6 +452,9 @@ public class MainFrame extends JFrame {
 			jm_ajuda = new JMenu();
 			jm_ajuda.setText("Ajuda");
 			jm_ajuda.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 12));
+			jm_ajuda.add(getJmi_help());
+			jm_ajuda.add(getJmi_Config());
+			
 		}
 		return jm_ajuda;
 	}

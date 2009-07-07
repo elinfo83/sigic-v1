@@ -147,7 +147,7 @@ public class CargosDisponiveis extends JDialog {
 		if (cargosOcupados instanceof PanelIntegrantesIgreja) {
 			if(!((PanelIntegrantesIgreja)this.cargosOcupados).getCargos().contains((Cargo)jcb_cargos.getSelectedItem())){
 				((PanelIntegrantesIgreja)this.cargosOcupados).getCargos().add((Cargo)jcb_cargos.getSelectedItem());
-				((PanelIntegrantesIgreja)this.cargosOcupados).updateJlistCargos();
+				
 			}else{
 				JOptionPane.showMessageDialog(this, null);
 			}	
