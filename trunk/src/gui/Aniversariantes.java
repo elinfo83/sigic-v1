@@ -1,13 +1,16 @@
 package gui;
 
+import java.awt.Rectangle;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -20,6 +23,9 @@ import mem.exception.InvalidDateException;
 import mem.model.integrantesIg.IntegranteIgreja;
 import util.Date;
 import facade.Facade;
+import java.awt.Color;
+import java.awt.event.KeyEvent;
+import java.awt.Font;
 
 public class Aniversariantes extends JPanel {
 
@@ -44,7 +50,9 @@ public class Aniversariantes extends JPanel {
 	private JTabbedPane jtpane;
 	private String[] titulosColunas = {"Nº de Registro", "Tipo", "Nome", "Data Nascimento", "Estado Civil"};
 	private String[][] initialDados = {{"","","","",""}};
-	
+	private JLabel jl_numAniversariantes = null;
+	private JLabel jl_quantAniversariantes = null;
+
 	/**
 	 * This is the default constructor
 	 */
@@ -61,12 +69,12 @@ public class Aniversariantes extends JPanel {
 	 * @return void
 	 */
 	private void initialize() {
-        this.setLayout(null);
-        this.setBounds(new java.awt.Rectangle(0,0,1023,703));
-        this.setBackground(new java.awt.Color(225,230,235));
-        this.add(getJp_dateLimite(), null);
-        this.add(getJsp_aniversariantes(), null);
-        this.add(getJp_buttons(), null);
+		this.setLayout(null);
+		this.setBounds(new java.awt.Rectangle(0,0,1023,703));
+		this.setBackground(new java.awt.Color(225,230,235));
+		this.add(getJp_dateLimite(), null);
+		this.add(getJsp_aniversariantes(), null);
+		this.add(getJp_buttons(), null);
 	}
 
 	/**
@@ -76,11 +84,20 @@ public class Aniversariantes extends JPanel {
 	 */
 	private JPanel getJp_dateLimite() {
 		if (jp_dateLimite == null) {
+			jl_quantAniversariantes = new JLabel();
+			jl_quantAniversariantes.setBounds(new Rectangle(785, 28, 43, 26));
+			jl_quantAniversariantes.setBackground(Color.white);
+			jl_quantAniversariantes.setDisplayedMnemonic(KeyEvent.VK_UNDEFINED);
+			jl_quantAniversariantes.setFont(new Font("Dialog", Font.BOLD, 24));
+			jl_quantAniversariantes.setText("0");
+			jl_numAniversariantes = new JLabel();
+			jl_numAniversariantes.setBounds(new Rectangle(605, 28, 172, 16));
+			jl_numAniversariantes.setText("Nº Aniversariantes no Período:");
 			jl_dataFinal = new JLabel();
-			jl_dataFinal.setBounds(new java.awt.Rectangle(364,28,55,16));
+			jl_dataFinal.setBounds(new Rectangle(16, 70, 55, 16));
 			jl_dataFinal.setText("Data Final");
 			jl_dataInicial = new JLabel();
-			jl_dataInicial.setBounds(new java.awt.Rectangle(17,28,62,16));
+			jl_dataInicial.setBounds(new Rectangle(16, 28, 62, 16));
 			jl_dataInicial.setText("Data inicial");
 			jp_dateLimite = new JPanel();
 			jp_dateLimite.setLayout(null);
@@ -94,6 +111,8 @@ public class Aniversariantes extends JPanel {
 			jp_dateLimite.add(getJcb_mesInicial(), null);
 			jp_dateLimite.add(getJcb_mesFinal(), null);
 			jp_dateLimite.add(getJb_visualizarAniversariantes(), null);
+			jp_dateLimite.add(jl_numAniversariantes, null);
+			jp_dateLimite.add(jl_quantAniversariantes, null);
 		}
 		return jp_dateLimite;
 	}
@@ -106,7 +125,7 @@ public class Aniversariantes extends JPanel {
 	private JTextField getJtf_diaInicial() {
 		if (jtf_diaInicial == null) {
 			jtf_diaInicial = new JTextField();
-			jtf_diaInicial.setBounds(new java.awt.Rectangle(84,28,30,18));
+			jtf_diaInicial.setBounds(new Rectangle(85, 28, 30, 18));
 		}
 		return jtf_diaInicial;
 	}
@@ -119,7 +138,7 @@ public class Aniversariantes extends JPanel {
 	private JTextField getJtf_diaFim() {
 		if (jtf_diaFim == null) {
 			jtf_diaFim = new JTextField();
-			jtf_diaFim.setBounds(new java.awt.Rectangle(423,28,30,18));
+			jtf_diaFim.setBounds(new Rectangle(85, 70, 30, 18));
 		}
 		return jtf_diaFim;
 	}
@@ -132,7 +151,7 @@ public class Aniversariantes extends JPanel {
 	private JComboBox getJcb_mesInicial() {
 		if (jcb_mesInicial == null) {
 			jcb_mesInicial = new JComboBox(LoadComboBoxs.preencheComboMeses());
-			jcb_mesInicial.setBounds(new java.awt.Rectangle(130,28,135,20));
+			jcb_mesInicial.setBounds(new Rectangle(120, 28, 135, 20));
 		}
 		return jcb_mesInicial;
 	}
@@ -145,7 +164,7 @@ public class Aniversariantes extends JPanel {
 	private JComboBox getJcb_mesFinal() {
 		if (jcb_mesFinal == null) {
 			jcb_mesFinal = new JComboBox(LoadComboBoxs.preencheComboMeses());
-			jcb_mesFinal.setBounds(new java.awt.Rectangle(464,28,135,21));
+			jcb_mesFinal.setBounds(new Rectangle(120, 70, 135, 21));
 		}
 		return jcb_mesFinal;
 	}
@@ -158,19 +177,19 @@ public class Aniversariantes extends JPanel {
 	private JButton getJb_visualizarAniversariantes() {
 		if (jb_visualizarAniversariantes == null) {
 			jb_visualizarAniversariantes = new JButton();
-			jb_visualizarAniversariantes.setBounds(new java.awt.Rectangle(707,28,185,23));
+			jb_visualizarAniversariantes.setBounds(new Rectangle(360, 28, 185, 23));
 			jb_visualizarAniversariantes.setText("Pesquisar Aniversariantes");
 			jb_visualizarAniversariantes
-					.addActionListener(new java.awt.event.ActionListener() {
-						public void actionPerformed(java.awt.event.ActionEvent e) {
-							jTableSetModel();
-						}
-					});
+			.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					jTableSetModel();
+				}
+			});
 		}
 		return jb_visualizarAniversariantes;
 	}
-	
-	
+
+
 
 	/**
 	 * This method initializes jsp_aniversariantes	
@@ -206,61 +225,67 @@ public class Aniversariantes extends JPanel {
 		}
 		return jt_aniversariantes;
 	}
-	
+
 	private void jTableSetModel(){
-		
-		
-		int tamList = 0;
+
+
+
 		DefaultTableModel tableModel = new DefaultTableModel();
 		int mesInicial =  jcb_mesInicial.getSelectedIndex();
 		int mesFinal =  jcb_mesFinal.getSelectedIndex();
-		
+		IntegranteIgreja temp = null;
+		LinkedList<IntegranteIgreja> aniverIntig;
+
 		Date dateInicial = null;
 		Date dateFinal = null;
 		String dataInicial = "";
 		String dataFinal = "";
-		
+
 		try {
-			
-			if(mesInicial>=1 || mesInicial<=9){
+
+			if(mesInicial>=1 && mesInicial<=9){
 				dataInicial =  jtf_diaInicial.getText()+"/"+"0"+mesInicial+"/"+"2000";
 			}else{
 				dataInicial =  jtf_diaInicial.getText()+"/"+mesInicial+"/"+"2000";
 			}
-			if(mesFinal>=1 || mesFinal<=9){
+			if(mesFinal>=1 && mesFinal<=9){
 				dataFinal = jtf_diaFim.getText()+"/"+"0"+mesFinal+"/"+"2000";
 			}else{
 				dataFinal =  jtf_diaFim.getText()+"/"+mesFinal+"/"+"2000";
 			}
-			System.out.println(dataInicial);
-			System.out.println(dataFinal);
 			dateInicial = new Date(dataInicial);
 			dateFinal = new Date(dataFinal);
-			
-			IntegranteIgreja[] integrantesIg = this.facade.getIntegranteIgreja();
-			
-			LinkedList<IntegranteIgreja> aniverIntig = new LinkedList<IntegranteIgreja>();
-			
-			for (int i = 0; i < integrantesIg.length; i++) {
-				if((integrantesIg[i].getDataNascimento().getMonth()>= dateInicial.getMonth() && 
-						integrantesIg[i].getDataNascimento().getMonth()<= dateFinal.getMonth()) &&
-						(integrantesIg[i].getDataNascimento().getDay())>= dateInicial.getDay() && 
-						integrantesIg[i].getDataNascimento().getDay()<= dateFinal.getDay()){
-					aniverIntig.add(integrantesIg[i]);
+
+			Iterator<IntegranteIgreja> integrantesIg = this.facade.getIntegranteIgreja();
+
+
+			aniverIntig = new LinkedList<IntegranteIgreja>();
+
+			while(integrantesIg.hasNext()){
+				temp = integrantesIg.next();
+				if((temp.getDataNascimento().getMonth()>= dateInicial.getMonth() && 
+						temp.getDataNascimento().getMonth()<= dateFinal.getMonth()) &&
+						(temp.getDataNascimento().getDay())>= dateInicial.getDay() && 
+						(temp.getDataNascimento().getDay()<= dateFinal.getDay() || temp.getDataNascimento().getMonth()<= (dateFinal.getMonth()-1))){
+								aniverIntig.add(temp);
 				}
+
 			}
-			
-			
-			tamList = aniverIntig.size();
+
+
+			//tamList = aniverIntig.size();
 			tableModel.addColumn("Nº de Registro");
 			tableModel.addColumn("Nome");
 			tableModel.addColumn("Tipo");
 			tableModel.addColumn("Data Nascimento");
 			tableModel.addColumn("Estado Civil");
 			String []row = new String[5];
+
+			
+			jl_quantAniversariantes.setText(String.valueOf(aniverIntig.size()==0?aniverIntig.size():aniverIntig.size()+1));
 			
 			/*"Rg", "Tipo", "Nome", "Data Nascimento", "Estado Civil"*/
-			for (int i = 0; i < tamList; i++) {
+			for (int i = 0; i < aniverIntig.size(); i++) {
 				row[0] = aniverIntig.get(i).getRg();
 				row[1] = aniverIntig.get(i).getNome();
 				row[2] = aniverIntig.get(i).getType().name();
@@ -268,8 +293,8 @@ public class Aniversariantes extends JPanel {
 				row[4] = aniverIntig.get(i).getEstadoCivil();
 				tableModel.addRow(row);
 			}
-			
-			if(tamList==0){
+
+			if(aniverIntig.size()==0){
 				row[0] = "";
 				row[1] = "";
 				row[2] = "";
@@ -277,6 +302,7 @@ public class Aniversariantes extends JPanel {
 				row[4] = "";
 				tableModel.addRow(row);
 			}
+
 			TableColumn column = null;
 			if(this.jt_aniversariantes!=null) this.jt_aniversariantes.setModel(tableModel);
 			for (int i = 0; i < 5; i++) {
@@ -288,24 +314,24 @@ public class Aniversariantes extends JPanel {
 				}
 			}
 			
-			
-			
+
+
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			JOptionPane.showMessageDialog(this,e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			JOptionPane.showMessageDialog(this,e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		} catch (InvalidDateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			JOptionPane.showMessageDialog(this,e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			JOptionPane.showMessageDialog(this,e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			JOptionPane.showMessageDialog(this,e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -318,7 +344,7 @@ public class Aniversariantes extends JPanel {
 		if (jp_buttons == null) {
 			jp_buttons = new JPanel();
 			jp_buttons.setLayout(null);
-			jp_buttons.setBounds(new java.awt.Rectangle(476,583,515,81));
+			jp_buttons.setBounds(new Rectangle(474, 573, 515, 74));
 			jp_buttons.setBackground(new java.awt.Color(225,230,232));
 			jp_buttons.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, null, null));
 			jp_buttons.add(getJb_imprimirLista(), null);
@@ -352,10 +378,10 @@ public class Aniversariantes extends JPanel {
 			jb_Fechar.setBounds(new java.awt.Rectangle(293,27,149,23));
 			jb_Fechar.setText("Fechar");
 			jb_Fechar.addActionListener(new java.awt.event.ActionListener() {
-						public void actionPerformed(java.awt.event.ActionEvent e) {
-							closeAba();
-						}
-					});
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					closeAba();
+				}
+			});
 		}
 		return jb_Fechar;
 	}

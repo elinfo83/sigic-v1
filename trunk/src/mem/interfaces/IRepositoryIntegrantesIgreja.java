@@ -3,6 +3,7 @@ package mem.interfaces;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Iterator;
 
 import mem.exception.InvalidDateException;
 import mem.exception.MemberNoRegisterException;
@@ -21,5 +22,5 @@ public interface IRepositoryIntegrantesIgreja {
 
 	public abstract IntegranteIgreja find(String rgMember) throws SQLException, InvalidDateException, MemberNoRegisterException, ClassNotFoundException, FileNotFoundException, IOException;
 
-	public abstract IntegranteIgreja[] getIntegranteIgreja() throws SQLException, InvalidDateException, ClassNotFoundException, FileNotFoundException, IOException;
+	public abstract Iterator<IntegranteIgreja> getIntegranteIgreja() throws SQLException, InvalidDateException, ClassNotFoundException, FileNotFoundException, IOException;
 }

@@ -354,11 +354,11 @@ public class PanelIntegrantesIgreja extends JPanel{
 			} catch (DepartmentNoRegisteredException e) {
 				JOptionPane.showMessageDialog(this,e.getMessage(), "Atenção", JOptionPane.PLAIN_MESSAGE);
 			} catch (ClassNotFoundException e) {
-				JOptionPane.showMessageDialog(this,e.getMessage(), "Atenção", JOptionPane.PLAIN_MESSAGE);
+				JOptionPane.showMessageDialog(this,e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 			} catch (FileNotFoundException e) {
-				e.printStackTrace();
+				JOptionPane.showMessageDialog(this,e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 			} catch (IOException e) {
-				e.printStackTrace();
+				JOptionPane.showMessageDialog(this,e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 			}			
 		}
 	}
@@ -521,11 +521,11 @@ public class PanelIntegrantesIgreja extends JPanel{
 			jtf_codIntIg.setText(tex);
 			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			JOptionPane.showMessageDialog(this,e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			JOptionPane.showMessageDialog(this,e.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
 		}
 			
 	}
@@ -1152,18 +1152,14 @@ public class PanelIntegrantesIgreja extends JPanel{
 			jb_removerCargo.setText("Remover");
 			jb_removerCargo.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
+					System.out.println("actionPerformed()"); 
 				}
 			});
 		}
 		return jb_removerCargo;
 	}
 
-	/**
-	 * This method initializes jtf_diaAniversario	
-	 * 	
-	 * @return javax.swing.JTextField	
-	 */
+	
 	private JTextField getJtf_diaAniversario() {
 		if (jtf_diaAniversario == null) {
 			jtf_diaAniversario = new JTextField();
@@ -1177,11 +1173,7 @@ public class PanelIntegrantesIgreja extends JPanel{
 		return jtf_diaAniversario;
 	}
 
-	/**
-	 * This method initializes jtf_diaBatismo	
-	 * 	
-	 * @return javax.swing.JTextField	
-	 */
+	
 	private JTextField getJtf_diaBatismo() {
 		if (jtf_diaBatismo == null) {
 			jtf_diaBatismo = new JTextField();

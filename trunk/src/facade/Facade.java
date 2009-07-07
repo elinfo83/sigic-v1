@@ -3,6 +3,7 @@ package facade;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Iterator;
 
 import mem.exception.CargoAlreadyRegistredException;
 import mem.exception.CargoNoRegisteredException;
@@ -105,7 +106,7 @@ public class Facade {
 		return this.cadastroDepartment.getDeps();
 	}
 	
-	public IntegranteIgreja[] getIntegranteIgreja() throws FileNotFoundException, SQLException, InvalidDateException, ClassNotFoundException, IOException{
+	public Iterator<IntegranteIgreja> getIntegranteIgreja() throws FileNotFoundException, SQLException, InvalidDateException, ClassNotFoundException, IOException{
 		return this.cadastroIntegranteIgreja.getIntegranteIgreja();
 	}
 	

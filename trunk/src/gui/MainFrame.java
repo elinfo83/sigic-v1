@@ -74,7 +74,7 @@ public class MainFrame extends JFrame {
 			jmi_aniversariantes.setText("Aniversariantes");
 			jmi_aniversariantes.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					addTab(new Aniversariantes(getFacade(),getJTabbedPane()),"Procurar Integrante Igreja");
+					addTab(new Aniversariantes(getFacade(),getJTabbedPane()),"Aniversariantes do Período");
 				}
 			});
 		}
