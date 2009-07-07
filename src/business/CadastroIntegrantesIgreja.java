@@ -3,6 +3,7 @@ package business;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Iterator;
 
 import mem.exception.InvalidDateException;
 import mem.exception.MemberAlreadyRegisteredException;
@@ -42,7 +43,7 @@ public class CadastroIntegrantesIgreja {
 		this.repository.update(member);
 	}
 	
-	public IntegranteIgreja[] getIntegranteIgreja() throws FileNotFoundException, SQLException, InvalidDateException, ClassNotFoundException, IOException{
+	public Iterator<IntegranteIgreja> getIntegranteIgreja() throws FileNotFoundException, SQLException, InvalidDateException, ClassNotFoundException, IOException{
 		return this.repository.getIntegranteIgreja();
 	}
 }

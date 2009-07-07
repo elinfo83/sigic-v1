@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import mem.exception.InvalidDateException;
 import mem.exception.MemberNoRegisterException;
@@ -210,6 +212,7 @@ public class RepositoryIntegrantesIgreja implements IRepositoryIntegrantesIgreja
 		
 		ResultSet resultSet = null;
 		String query = "";
+		IntegranteIgreja temp = null;
 		
 		if(exist(rg)){
 			// CONSULTAS NO BANCO
@@ -220,13 +223,17 @@ public class RepositoryIntegrantesIgreja implements IRepositoryIntegrantesIgreja
 			"WHERE (DP.rg = '"+ rg +"') AND (II.rg = '"+ rg +"') AND (ID.rg = '"+ rg +"') AND (E.rg = '"+ rg +"') " +
 					"AND (F.rg = '"+ rg +"') AND (T.rg = '"+ rg +"');";
 			
-			System.out.println(query);
 			this.connectBank();
 			resultSet = this.statement.executeQuery(query);
 			
 			if (resultSet.next()) {
-				return createIntegranteIgrejaComplete(resultSet);
+				
+				temp = createIntegranteIgrejaComplete(resultSet);
+				this.closeConnection();
+				return temp;
+				
 			} else{
+				this.closeConnection();
 				return null;
 			}
 			
@@ -285,19 +292,15 @@ public class RepositoryIntegrantesIgreja implements IRepositoryIntegrantesIgreja
 		integranteIg.setEndereco(new Address((String)resultSet.getObject(19),(String)resultSet.getObject(20),
 				(String)resultSet.getObject(21),(String)resultSet.getObject(22),(String)resultSet.getObject(23),
 				(String)resultSet.getObject(24), (String)resultSet.getObject(25)));
-		
 				
-		this.closeConnection();
-		
 		return integranteIg;
 	}
 	
 	
-	public  IntegranteIgreja[] getIntegranteIgreja() throws SQLException, InvalidDateException, ClassNotFoundException, FileNotFoundException, IOException{
+	public  Iterator<IntegranteIgreja> getIntegranteIgreja() throws SQLException, InvalidDateException, ClassNotFoundException, FileNotFoundException, IOException{
 				
-		String queryIntIg = "";
-		IntegranteIgreja[] intIng = null;
-		int TAM = 0;		
+		String queryIntIg = "";		
+		LinkedList<IntegranteIgreja> list = new LinkedList<IntegranteIgreja>();
 		
 		queryIntIg = "SELECT DP.rg, DP.nome, DP.dataNascimento, DP.estadoCivil, DP.pathphoto, DP.email, DP.sexo, " +
 					"DP.naturalidade, II.tipo, II.dataConversao, II.dataBatismo, II.pathHistorico, ID.codDep, T.residencial, " +
@@ -306,36 +309,30 @@ public class RepositoryIntegrantesIgreja implements IRepositoryIntegrantesIgreja
 					" INNER JOIN integrantesDep ID ON (ID.rg = DP.rg)) INNER JOIN telefones T ON (T.rg = DP.rg))" +
 					"INNER JOIN filiacao F ON (F.rg = DP.rg)) INNER JOIN enderecos E ON (E.rg = DP.rg) ORDER BY DP.rg;";
 		
-		this.connectBank();
 		
-		ResultSet resultSetIntIg = this.statement.executeQuery(queryIntIg);		
+		
+		Class.forName(ConstantsSystem.JDBC_DRIVER);
+		Connection connection = DriverManager.getConnection(ConstantsSystem.DATABASE_URL, ConstantsSystem.USER, ConstantsSystem.PASSWORD);;
+		Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+		
+		ResultSet resultSetIntIg = statement.executeQuery(queryIntIg);		
+		
+		
 		
 		while(resultSetIntIg.next()){
-			TAM++;
+			list.add(createIntegranteIgrejaComplete(resultSetIntIg));
 		}
+		statement.close();
+		connection.close();
 		
-		intIng = new IntegranteIgreja[TAM];
-		resultSetIntIg.first();
-		if (TAM==0) {
-			this.closeConnection();
-			return intIng;
-		}
-		
-		do {
-			TAM--;
-			intIng[TAM] = createIntegranteIgrejaComplete(resultSetIntIg); 
-		} while (resultSetIntIg.next() || TAM>=1);
-		
-		this.closeConnection();
-		
-		return intIng;
+		return list.iterator();
 	}
 	
 	
 	private void connectBank() throws ClassNotFoundException, SQLException{
 		Class.forName(ConstantsSystem.JDBC_DRIVER);
 		connection = DriverManager.getConnection(ConstantsSystem.DATABASE_URL, ConstantsSystem.USER, ConstantsSystem.PASSWORD);
-		statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+		statement = connection.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
 	}
 	
 	private void closeConnection() throws SQLException{

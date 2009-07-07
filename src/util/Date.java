@@ -68,7 +68,7 @@ public class Date {
 
 		if(month<1 || month>12)throw new InvalidDateException("Mês não existe!");
 
-		if(year < 1800)throw new InvalidDateException("Ano Invalido!");
+		if(year < 1800)throw new InvalidDateException("Ano Invalido!" + day + month + year);
 
 		/*Trata o mes de fevereiro em ano bisexto ou não*/
 		if(month == 2){
@@ -78,15 +78,11 @@ public class Date {
 				this.setDay(day);
 			}else{
 				throw new InvalidDateException("Dia inválido para o mes de Fevereiro!");
-			}
-		}
-
-		/*meses com 30 dias: abril, junho, setembro, novembro */
-
-		if ( !( (month == 4) || (month == 6) || (month == 9) || (month == 11) ) && day <= 30) {
+			}/*meses com 30 dias: abril, junho, setembro, novembro */
+		}else if ( ( (month == 4) || (month == 6) || (month == 9) || (month == 11) ) && day <= 30) {
 			
 			this.setDay(day);
-		} else if ( !( (month == 1) || (month == 3) || (month == 5) || (month == 7) || (month == 8) 
+		} else if ( ( (month == 1) || (month == 3) || (month == 5) || (month == 7) || (month == 8) 
 				|| (month == 10) || (month == 12)) && day <= 31) {
 			
 			this.setDay(day);
