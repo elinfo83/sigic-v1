@@ -218,7 +218,7 @@ public class PanelIntegrantesIgreja extends JPanel{
 	private JButton getJb_fechar() {
 		if (jb_confirmar == null) {
 			jb_confirmar = new JButton();
-			jb_confirmar.setBounds(new Rectangle(346, 19, 143, 31));
+			jb_confirmar.setBounds(new Rectangle(346, 19, 143, 25));
 			jb_confirmar.setIcon(new ImageIcon("D:/workspace/sigic-v1.1/imagens/confirm1.png"));
 			jb_confirmar.setText("Cadastrar");
 			jb_confirmar.addActionListener(new java.awt.event.ActionListener() {
@@ -362,7 +362,7 @@ public class PanelIntegrantesIgreja extends JPanel{
 	private JButton getJb_confirmar() {
 		if (jb_cancelar == null) {
 			jb_cancelar = new JButton();
-			jb_cancelar.setBounds(new Rectangle(20, 19, 143, 31));
+			jb_cancelar.setBounds(new Rectangle(20, 19, 143, 25));
 			jb_cancelar.setIcon(new ImageIcon("D:/workspace/sigic-v1.1/imagens/sair.png"));
 			jb_cancelar.setText("Fechar");
 			jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -902,7 +902,8 @@ public class PanelIntegrantesIgreja extends JPanel{
 		if (jb_procurarFoto == null) {
 			jb_procurarFoto = new JButton();
 			jb_procurarFoto.setText("Procurar Foto");
-			jb_procurarFoto.setBounds(new java.awt.Rectangle(838,227,143,23));
+			jb_procurarFoto.setIcon(new ImageIcon("D:/workspace/sigic-v1.1/imagens/buscar.png"));
+			jb_procurarFoto.setBounds(new Rectangle(838, 227, 143, 25));
 			jb_procurarFoto.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
 					getFile();
@@ -1295,8 +1296,8 @@ public class PanelIntegrantesIgreja extends JPanel{
 	private JButton getJb_limpar() {
 		if (jb_limpar == null) {
 			jb_limpar = new JButton();
-			jb_limpar.setBounds(new Rectangle(183, 19, 143, 31));
-			jb_limpar.setIcon(new ImageIcon("D:/workspace/sigic-v1.1/imagens/lixeira.png"));
+			jb_limpar.setBounds(new Rectangle(183, 19, 143, 25));
+			jb_limpar.setIcon(new ImageIcon("D:/workspace/sigic-v1.1/imagens/lixeira2.png"));
 			jb_limpar.setText("Limpar");
 			jb_limpar.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
