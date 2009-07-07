@@ -26,6 +26,10 @@ import facade.Facade;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.Font;
+import java.awt.GridBagLayout;
+import javax.swing.BorderFactory;
+import javax.swing.border.TitledBorder;
+import javax.swing.ImageIcon;
 
 public class Aniversariantes extends JPanel {
 
@@ -52,6 +56,8 @@ public class Aniversariantes extends JPanel {
 	private String[][] initialDados = {{"","","","",""}};
 	private JLabel jl_numAniversariantes = null;
 	private JLabel jl_quantAniversariantes = null;
+	private JPanel jp_numNiver = null;
+	private JLabel jl_baloes = null;
 
 	/**
 	 * This is the default constructor
@@ -84,15 +90,19 @@ public class Aniversariantes extends JPanel {
 	 */
 	private JPanel getJp_dateLimite() {
 		if (jp_dateLimite == null) {
+			jl_baloes = new JLabel();
+			jl_baloes.setIcon(new ImageIcon("D:/workspace/sigic-v1.1/imagens/baloes3.gif"));
+			jl_baloes.setBounds(new Rectangle(817, 8, 86, 103));
+			jl_baloes.setText("JLabel");
 			jl_quantAniversariantes = new JLabel();
-			jl_quantAniversariantes.setBounds(new Rectangle(785, 28, 43, 26));
 			jl_quantAniversariantes.setBackground(Color.white);
 			jl_quantAniversariantes.setDisplayedMnemonic(KeyEvent.VK_UNDEFINED);
 			jl_quantAniversariantes.setFont(new Font("Dialog", Font.BOLD, 24));
+			jl_quantAniversariantes.setBounds(new Rectangle(206, 9, 43, 26));
 			jl_quantAniversariantes.setText("0");
 			jl_numAniversariantes = new JLabel();
-			jl_numAniversariantes.setBounds(new Rectangle(605, 28, 172, 16));
 			jl_numAniversariantes.setText("Nº Aniversariantes no Período:");
+			jl_numAniversariantes.setBounds(new Rectangle(17, 9, 172, 16));
 			jl_dataFinal = new JLabel();
 			jl_dataFinal.setBounds(new Rectangle(16, 70, 55, 16));
 			jl_dataFinal.setText("Data Final");
@@ -102,7 +112,7 @@ public class Aniversariantes extends JPanel {
 			jp_dateLimite = new JPanel();
 			jp_dateLimite.setLayout(null);
 			jp_dateLimite.setBounds(new java.awt.Rectangle(22,16,971,114));
-			jp_dateLimite.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datas Limitantes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", java.awt.Font.BOLD, 12), new java.awt.Color(51,51,51)));
+			jp_dateLimite.setBorder(BorderFactory.createTitledBorder(null, "Datas Limitantes", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Dialog", Font.BOLD, 12), new Color(51, 51, 51)));
 			jp_dateLimite.setBackground(new java.awt.Color(225,230,232));
 			jp_dateLimite.add(jl_dataInicial, null);
 			jp_dateLimite.add(jl_dataFinal, null);
@@ -111,8 +121,8 @@ public class Aniversariantes extends JPanel {
 			jp_dateLimite.add(getJcb_mesInicial(), null);
 			jp_dateLimite.add(getJcb_mesFinal(), null);
 			jp_dateLimite.add(getJb_visualizarAniversariantes(), null);
-			jp_dateLimite.add(jl_numAniversariantes, null);
-			jp_dateLimite.add(jl_quantAniversariantes, null);
+			jp_dateLimite.add(getJp_numNiver(), null);
+			jp_dateLimite.add(jl_baloes, null);
 		}
 		return jp_dateLimite;
 	}
@@ -177,7 +187,7 @@ public class Aniversariantes extends JPanel {
 	private JButton getJb_visualizarAniversariantes() {
 		if (jb_visualizarAniversariantes == null) {
 			jb_visualizarAniversariantes = new JButton();
-			jb_visualizarAniversariantes.setBounds(new Rectangle(360, 28, 185, 23));
+			jb_visualizarAniversariantes.setBounds(new Rectangle(335, 70, 185, 23));
 			jb_visualizarAniversariantes.setText("Pesquisar Aniversariantes");
 			jb_visualizarAniversariantes
 			.addActionListener(new java.awt.event.ActionListener() {
@@ -387,6 +397,24 @@ public class Aniversariantes extends JPanel {
 	}
 	private void closeAba(){
 		jtpane.remove(this);
+	}
+
+	/**
+	 * This method initializes jp_numNiver	
+	 * 	
+	 * @return javax.swing.JPanel	
+	 */
+	private JPanel getJp_numNiver() {
+		if (jp_numNiver == null) {
+			jp_numNiver = new JPanel();
+			jp_numNiver.setLayout(null);
+			jp_numNiver.setBounds(new Rectangle(335, 15, 266, 42));
+			jp_numNiver.setBorder(BorderFactory.createTitledBorder(null, "", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, new Font("Dialog", Font.BOLD, 12), new Color(51, 51, 51)));
+			jp_numNiver.setBackground(new Color(225, 230, 232));
+			jp_numNiver.add(jl_numAniversariantes, null);
+			jp_numNiver.add(jl_quantAniversariantes, null);
+		}
+		return jp_numNiver;
 	}
 
 }
