@@ -8,6 +8,7 @@ public class ConstantsSystem {
 	public static final String PATH_HISTORICOS = "D:\\Projeto SIGIC\\sigicslm\\histIntIg";
 	public static final String PATH_MINUTAS = "D:\\Projeto SIGIC\\sigicslm\\histCar";
 	public static final String PATH_HIST_DEPS = "D:\\Projeto SIGIC\\sigicslm\\histDep";
+	public static final String PATH_IMAGES = "D:\\workspace\\sigic-v1.1\\imagens\\";
 	
 	
 }
