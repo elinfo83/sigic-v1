@@ -46,4 +46,8 @@ public class CadastroIntegrantesIgreja {
 	public Iterator<IntegranteIgreja> getIntegranteIgreja() throws FileNotFoundException, SQLException, InvalidDateException, ClassNotFoundException, IOException{
 		return this.repository.getIntegranteIgreja();
 	}
+	
+	public Iterator<IntegranteIgreja> getIntegranteIgrejaByDate() throws FileNotFoundException, SQLException, InvalidDateException, ClassNotFoundException, IOException{
+		return this.repository.getIntegranteIgrejaByDate();
+	}
 }

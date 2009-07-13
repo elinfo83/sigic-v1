@@ -1,12 +1,17 @@
 package gui;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.LinkedList;
 
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -16,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
@@ -23,13 +29,6 @@ import mem.exception.InvalidDateException;
 import mem.model.integrantesIg.IntegranteIgreja;
 import util.Date;
 import facade.Facade;
-import java.awt.Color;
-import java.awt.event.KeyEvent;
-import java.awt.Font;
-import java.awt.GridBagLayout;
-import javax.swing.BorderFactory;
-import javax.swing.border.TitledBorder;
-import javax.swing.ImageIcon;
 
 public class Aniversariantes extends JPanel {
 
@@ -266,7 +265,7 @@ public class Aniversariantes extends JPanel {
 			dateInicial = new Date(dataInicial);
 			dateFinal = new Date(dataFinal);
 
-			Iterator<IntegranteIgreja> integrantesIg = this.facade.getIntegranteIgreja();
+			Iterator<IntegranteIgreja> integrantesIg = this.facade.getIntegranteIgrejaByDate();
 
 
 			aniverIntig = new LinkedList<IntegranteIgreja>();
@@ -292,7 +291,7 @@ public class Aniversariantes extends JPanel {
 			String []row = new String[5];
 
 			
-			jl_quantAniversariantes.setText(String.valueOf(aniverIntig.size()==0?aniverIntig.size():aniverIntig.size()+1));
+			jl_quantAniversariantes.setText(String.valueOf(aniverIntig.size()));
 			
 			/*"Rg", "Tipo", "Nome", "Data Nascimento", "Estado Civil"*/
 			for (int i = 0; i < aniverIntig.size(); i++) {

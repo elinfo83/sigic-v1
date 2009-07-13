@@ -98,21 +98,21 @@ public class Facade {
 		return this.cadastroDepartment.find(codDep);
 	}
 
-	public Cargo[] getCargos() throws FileNotFoundException, SQLException, InvalidDateException, ClassNotFoundException, IOException{
+	public synchronized Cargo[] getCargos() throws FileNotFoundException, SQLException, InvalidDateException, ClassNotFoundException, IOException{
 		return this.cadastroCargo.getCargos();
 	}
 	
-	public Department[] getDepartment() throws FileNotFoundException, SQLException, InvalidDateException, ClassNotFoundException, DepartmentNoRegisteredException, IOException{
+	public synchronized Department[] getDepartment() throws FileNotFoundException, SQLException, InvalidDateException, ClassNotFoundException, DepartmentNoRegisteredException, IOException{
 		return this.cadastroDepartment.getDeps();
 	}
 	
-	public Iterator<IntegranteIgreja> getIntegranteIgreja() throws FileNotFoundException, SQLException, InvalidDateException, ClassNotFoundException, IOException{
+	public synchronized Iterator<IntegranteIgreja> getIntegranteIgreja() throws FileNotFoundException, SQLException, InvalidDateException, ClassNotFoundException, IOException{
 		return this.cadastroIntegranteIgreja.getIntegranteIgreja();
 	}
 	
-	/*public synchronized Iterator<IntegranteIgreja> searchMember(String nome) throws SQLException, InvalidDateException {
-		return this.cadastroMember.search(nome);
-	}*/
+	public synchronized Iterator<IntegranteIgreja> getIntegranteIgrejaByDate() throws FileNotFoundException, SQLException, InvalidDateException, ClassNotFoundException, IOException{
+		return this.cadastroIntegranteIgreja.getIntegranteIgrejaByDate();
+	}
 	
 	
 
