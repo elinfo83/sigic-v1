@@ -7,7 +7,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -96,7 +95,7 @@ public class RepositoryDiretorias implements IRepositoryDiretorias{
 		return resp;
 
 	}
-
+/*
 	public void update(IntegranteIgreja integranteIg) {
 
 		String updateIntIg = "";
@@ -199,7 +198,7 @@ public class RepositoryDiretorias implements IRepositoryDiretorias{
 		}
 
 	}
-
+*/
 	private IntegranteIgreja createIntegranteIgrejaComplete(ResultSet resultSet) throws SQLException, InvalidDateException, FileNotFoundException, IOException, ClassNotFoundException
 	{
 

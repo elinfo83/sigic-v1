@@ -23,4 +23,6 @@ public interface IRepositoryIntegrantesIgreja {
 	public abstract IntegranteIgreja find(String rgMember) throws SQLException, InvalidDateException, MemberNoRegisterException, ClassNotFoundException, FileNotFoundException, IOException;
 
 	public abstract Iterator<IntegranteIgreja> getIntegranteIgreja() throws SQLException, InvalidDateException, ClassNotFoundException, FileNotFoundException, IOException;
+
+	public  abstract Iterator<IntegranteIgreja> getIntegranteIgrejaByDate() throws SQLException, InvalidDateException, ClassNotFoundException, FileNotFoundException, IOException;
 }

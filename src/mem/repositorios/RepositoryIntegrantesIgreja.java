@@ -329,6 +329,37 @@ public class RepositoryIntegrantesIgreja implements IRepositoryIntegrantesIgreja
 	}
 	
 	
+	public  Iterator<IntegranteIgreja> getIntegranteIgrejaByDate() throws SQLException, InvalidDateException, ClassNotFoundException, FileNotFoundException, IOException{
+		
+		String queryIntIg = "";		
+		LinkedList<IntegranteIgreja> list = new LinkedList<IntegranteIgreja>();
+		
+		queryIntIg = "SELECT DP.rg, DP.nome, DP.dataNascimento, DP.estadoCivil, DP.pathphoto, DP.email, DP.sexo, " +
+					"DP.naturalidade, II.tipo, II.dataConversao, II.dataBatismo, II.pathHistorico, ID.codDep, T.residencial, " +
+					"T.celular, T.comercial, F.nomePai, F.nomeMae, E.rua, E.numCasa, E.cep, E.bairro, E.cidade, E.estado, E.complemento, " +
+					"II.titulo FROM  ((((  dadosPessoais DP INNER JOIN integrantesIgreja II ON (DP.rg = II.rg))" +
+					" INNER JOIN integrantesDep ID ON (ID.rg = DP.rg)) INNER JOIN telefones T ON (T.rg = DP.rg))" +
+					"INNER JOIN filiacao F ON (F.rg = DP.rg)) INNER JOIN enderecos E ON (E.rg = DP.rg) ORDER BY DP.dataNascimento;";
+		
+		
+		
+		Class.forName(ConstantsSystem.JDBC_DRIVER);
+		Connection connection = DriverManager.getConnection(ConstantsSystem.DATABASE_URL, ConstantsSystem.USER, ConstantsSystem.PASSWORD);;
+		Statement statement = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+		
+		ResultSet resultSetIntIg = statement.executeQuery(queryIntIg);		
+		
+		
+		
+		while(resultSetIntIg.next()){
+			list.add(createIntegranteIgrejaComplete(resultSetIntIg));
+		}
+		statement.close();
+		connection.close();
+		
+		return list.iterator();
+	}
+	
 	private void connectBank() throws ClassNotFoundException, SQLException{
 		Class.forName(ConstantsSystem.JDBC_DRIVER);
 		connection = DriverManager.getConnection(ConstantsSystem.DATABASE_URL, ConstantsSystem.USER, ConstantsSystem.PASSWORD);
