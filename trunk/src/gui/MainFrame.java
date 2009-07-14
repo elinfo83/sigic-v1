@@ -4,20 +4,35 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import com.lowagie.text.DocumentException;
+
+import mem.exception.InvalidDateException;
+import mem.model.integrantesIg.IntegranteIgreja;
+import mem.model.integrantesIg.IntegrantesIgrejaTypes;
+import mem.model.relatorio.RelatorioIntegrantesIgreja;
+
 import util.ConstantsSystem;
 
 import facade.Facade;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public class MainFrame extends JFrame {
 
@@ -44,6 +59,7 @@ public class MainFrame extends JFrame {
 	private JMenuItem jmi_help = null;
 	private JMenuItem jmi_Config = null;
 	private JMenuItem jmi_diretorias = null;
+	private JMenuItem jmi_gerarRelatorioGeral = null;
 	/**
 	 * This is the default constructor
 	 */
@@ -51,7 +67,7 @@ public class MainFrame extends JFrame {
 		super();
 		initialize();
 	}
-	
+
 	/**
 	 * This method initializes jm_viewDepartments	
 	 * 	
@@ -170,6 +186,84 @@ public class MainFrame extends JFrame {
 		return jmi_diretorias;
 	}
 
+	/**
+	 * This method initializes jmi_gerarRelatorioGeral	
+	 * 	
+	 * @return javax.swing.JMenuItem	
+	 */
+	private JMenuItem getJmi_gerarRelatorioGeral() {
+		if (jmi_gerarRelatorioGeral == null) {
+			jmi_gerarRelatorioGeral = new JMenuItem();
+			jmi_gerarRelatorioGeral.setText("Exportar Relatorio Geral");
+			jmi_gerarRelatorioGeral.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					gerarRelatorioGeral();
+				}
+			});
+		}
+		return jmi_gerarRelatorioGeral;
+	}
+
+	private void gerarRelatorioGeral(){
+
+		try {
+			Iterator<IntegranteIgreja> iterator = this.facade.getIntegranteIgreja();
+			LinkedList<IntegranteIgreja> list = new LinkedList<IntegranteIgreja>();
+			LinkedList<IntegranteIgreja> temp = new LinkedList<IntegranteIgreja>();
+			IntegranteIgreja integranteIgreja;
+			while(iterator.hasNext()){
+				integranteIgreja = iterator.next();
+				if(integranteIgreja.getType().name().equals(IntegrantesIgrejaTypes.MEMBRO.name())){
+					list.add(integranteIgreja);
+
+				}else{
+					temp.add(integranteIgreja);
+				}
+			}
+			
+			list.addAll(temp);
+
+			JFileChooser fileChooser = new JFileChooser();
+
+			fileChooser.setFileSelectionMode(JFileChooser.SAVE_DIALOG);
+			fileChooser.setDialogTitle("Selecionar Pasta");
+			fileChooser.showSaveDialog(null);
+			File file = fileChooser.getSelectedFile();
+			String path = "";
+
+			if (file.isDirectory()) {
+				System.out.println("passou");
+				path = file.getAbsolutePath();
+			}
+
+
+
+			RelatorioIntegrantesIgreja relatorioIntegrantesIgreja = new RelatorioIntegrantesIgreja(
+					"Relatório de Membros e Congregados da ICB em São Lourenço da Mata/PE",path+"\\relatorio.pdf");
+			relatorioIntegrantesIgreja.preencheTabela(list.iterator());
+			
+			JOptionPane.showMessageDialog(this, "Relatorio gerado em " + path, "", JOptionPane.INFORMATION_MESSAGE);
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidDateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (DocumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public static void main(String[] args) {
 		MainFrame main = new MainFrame();
 		main.setVisible(true);
@@ -219,7 +313,7 @@ public class MainFrame extends JFrame {
 		}
 		return this.facade;
 	}
-	
+
 	private JPanel getJContentPane() {
 		if (jContentPane == null) {
 			jContentPane = new JPanel();
@@ -321,7 +415,7 @@ public class MainFrame extends JFrame {
 			jmi_departamentos.setIcon(new ImageIcon(ConstantsSystem.PATH_IMAGES+"departamentos.png"));
 			jmi_departamentos.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					addTab(new PanelDepartamentos(getFacade(),getJTabbedPane()), "Cadastrar Deoartamento");
+					addTab(new PanelDepartamentos(getFacade(),getJTabbedPane()), "Cadastrar Departamento");
 				}
 			});
 		}
@@ -343,7 +437,7 @@ public class MainFrame extends JFrame {
 			jTabbedPane.setTabPlacement(JTabbedPane.TOP);
 			jTabbedPane.addTab("Tela Inicial", null, inicial, null);
 			jTabbedPane.setSelectedComponent(inicial);
-			
+
 		}
 		return jTabbedPane;
 	}
@@ -411,6 +505,7 @@ public class MainFrame extends JFrame {
 			jm_Arquivo = new JMenu();
 			jm_Arquivo.setText("Arquivo");
 			jm_Arquivo.setFont(new Font("Dialog", Font.BOLD, 12));
+			jm_Arquivo.add(getJmi_gerarRelatorioGeral());
 			jm_Arquivo.add(getJmi_sair());
 		}
 		return jm_Arquivo;
@@ -431,7 +526,7 @@ public class MainFrame extends JFrame {
 					closed();
 				}
 
-				
+
 			});
 		}
 		return jmi_sair;
@@ -439,7 +534,7 @@ public class MainFrame extends JFrame {
 
 	private void closed() {
 		this.dispose();
-		
+
 	}
 
 	/**
@@ -454,7 +549,7 @@ public class MainFrame extends JFrame {
 			jm_ajuda.setFont(new java.awt.Font("Dialog", java.awt.Font.BOLD, 12));
 			jm_ajuda.add(getJmi_help());
 			jm_ajuda.add(getJmi_Config());
-			
+
 		}
 		return jm_ajuda;
 	}
