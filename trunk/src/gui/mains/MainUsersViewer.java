@@ -1,7 +1,14 @@
-package gui;
+package gui.mains;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -16,38 +23,31 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import com.lowagie.text.DocumentException;
-
 import mem.exception.InvalidDateException;
+import mem.interfaces.IMainFrame;
 import mem.model.integrantesIg.IntegranteIgreja;
 import mem.model.integrantesIg.IntegrantesIgrejaTypes;
 import mem.model.relatorio.RelatorioIntegrantesIgreja;
-
 import util.ConstantsSystem;
 
-import facade.Facade;
-import java.awt.Toolkit;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Iterator;
-import java.util.LinkedList;
+import com.lowagie.text.DocumentException;
 
-public class MainFrame extends JFrame {
+import facade.Facade;
+import gui.Aniversariantes;
+import gui.ProcurarMembro;
+import gui.TelaInicial;
+import gui.ViewDepartment;
+
+public class MainUsersViewer extends JFrame implements IMainFrame{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel jContentPane = null;
 	private JMenuBar menuprincipal = null;
-	private JMenu jm_cadastros = null;
 	private JMenu jm_visualizar = null;
 	private UIManager.LookAndFeelInfo looks[];
-	private JMenuItem jmi_membros = null;
-	private JMenuItem jmi_departamentos = null;
 	private JTabbedPane jTabbedPane = null;
 	private JMenu jm_departamentos = null;
 	private JMenuItem jm_jovens = null;
-	private JMenuItem jMenuItem = null;
 	private Facade facade;
 	private JMenu jm_Arquivo = null;
 	private JMenuItem jmi_sair = null;
@@ -58,12 +58,11 @@ public class MainFrame extends JFrame {
 	private JMenuItem jmi_integrantesIgreja = null;
 	private JMenuItem jmi_help = null;
 	private JMenuItem jmi_Config = null;
-	private JMenuItem jmi_diretorias = null;
 	private JMenuItem jmi_gerarRelatorioGeral = null;
 	/**
 	 * This is the default constructor
 	 */
-	public MainFrame() {
+	public MainUsersViewer() {
 		super();
 		initialize();
 	}
@@ -168,25 +167,6 @@ public class MainFrame extends JFrame {
 	}
 
 	/**
-	 * This method initializes jmi_diretorias	
-	 * 	
-	 * @return javax.swing.JMenuItem	
-	 */
-	private JMenuItem getJmi_diretorias() {
-		if (jmi_diretorias == null) {
-			jmi_diretorias = new JMenuItem();
-			jmi_diretorias.setText("Diretorias");
-			jmi_diretorias.setIcon(new ImageIcon(ConstantsSystem.PATH_IMAGES+"diretorias.png"));
-			jmi_diretorias.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					System.out.println("actionPerformed()"); // TODO Auto-generated Event stub actionPerformed()
-				}
-			});
-		}
-		return jmi_diretorias;
-	}
-
-	/**
 	 * This method initializes jmi_gerarRelatorioGeral	
 	 * 	
 	 * @return javax.swing.JMenuItem	
@@ -266,7 +246,7 @@ public class MainFrame extends JFrame {
 		}
 	}
 	public static void main(String[] args) {
-		MainFrame main = new MainFrame();
+		MainUsersViewer main = new MainUsersViewer();
 		main.setVisible(true);
 	}
 
@@ -334,31 +314,11 @@ public class MainFrame extends JFrame {
 		if (menuprincipal == null) {
 			menuprincipal = new JMenuBar();
 			menuprincipal.add(getJm_Arquivo());
-			menuprincipal.add(getJm_cadastros());
 			menuprincipal.add(getJm_visualizar());
 			menuprincipal.add(getJm_departamentos());
 			menuprincipal.add(getJm_ajuda());
 		}
 		return menuprincipal;
-	}
-
-	/**
-	 * This method initializes jm_cadastros	
-	 * 	
-	 * @return javax.swing.JMenu	
-	 */
-	private JMenu getJm_cadastros() {
-		if (jm_cadastros == null) {
-			jm_cadastros = new JMenu();
-			jm_cadastros.setName("");
-			jm_cadastros.setFont(new Font("Dialog", Font.BOLD, 12));
-			jm_cadastros.setText("Cadastros");
-			jm_cadastros.add(getJmi_membros());
-			jm_cadastros.add(getJMenuItem());
-			jm_cadastros.add(getJmi_departamentos());
-			jm_cadastros.add(getJmi_diretorias());
-		}
-		return jm_cadastros;
 	}
 
 	/**
@@ -379,50 +339,10 @@ public class MainFrame extends JFrame {
 		return jm_visualizar;
 	}
 
-	/**
-	 * This method initializes jmi_membros	
-	 * 	
-	 * @return javax.swing.JMenuItem	
-	 */
-	private JMenuItem getJmi_membros() {
-		if (jmi_membros == null) {
-			jmi_membros = new JMenuItem();
-			jmi_membros.setText("Membros");
-			jmi_membros.setToolTipText("cadastra membros");
-			jmi_membros.setIcon(new ImageIcon(ConstantsSystem.PATH_IMAGES+"member.png"));
-			jmi_membros.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					addTab(new PanelIntegrantesIgreja(getFacade(),getJTabbedPane()),"Cadastrar Membro");
-				}
-			});
-		}
-		return jmi_membros;
-	}
-
 	private void addTab(JPanel jPanel, String text){
 		this.jTabbedPane.addTab(text, null, jPanel, null);
 		this.jTabbedPane.setSelectedComponent(jPanel);
 	}
-	/**
-	 * This method initializes jmi_departamentos	
-	 * 	
-	 * @return javax.swing.JMenuItem	
-	 */
-	private JMenuItem getJmi_departamentos() {
-		if (jmi_departamentos == null) {
-			jmi_departamentos = new JMenuItem();
-			jmi_departamentos.setText("Departamentos");
-			jmi_departamentos.setToolTipText("cadastra departamentos");
-			jmi_departamentos.setIcon(new ImageIcon(ConstantsSystem.PATH_IMAGES+"departamentos.png"));
-			jmi_departamentos.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					addTab(new PanelDepartamentos(getFacade(),getJTabbedPane()), "Cadastrar Departamento");
-				}
-			});
-		}
-		return jmi_departamentos;
-	}
-
 	/**
 	 * This method initializes jTabbedPane	
 	 * 	
@@ -475,25 +395,6 @@ public class MainFrame extends JFrame {
 			});
 		}
 		return jm_jovens;
-	}
-
-	/**
-	 * This method initializes jMenuItem	
-	 * 	
-	 * @return javax.swing.JMenuItem	
-	 */
-	private JMenuItem getJMenuItem() {
-		if (jMenuItem == null) {
-			jMenuItem = new JMenuItem();
-			jMenuItem.setText("Cargos");
-			jMenuItem.setIcon(new ImageIcon(ConstantsSystem.PATH_IMAGES+"cargos.png"));
-			jMenuItem.addActionListener(new java.awt.event.ActionListener() {
-				public void actionPerformed(java.awt.event.ActionEvent e) {
-					addTab(new PanelCargos(getFacade(),getJTabbedPane()),"Cadastrar Cargo");
-				}
-			});
-		}
-		return jMenuItem;
 	}
 
 	/**

@@ -1,0 +1,225 @@
+package gui.login;
+
+import java.awt.Color;
+import java.awt.Rectangle;
+import java.awt.event.KeyEvent;
+import java.sql.SQLException;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
+import mem.exception.UsuarioNoRegisteredException;
+import mem.model.usuarios.Usuario;
+import facade.Facade;
+import gui.mains.MainUserModify;
+import gui.mains.MainUsersViewer;
+
+public class LoginSigic extends JFrame {
+
+	private static final long serialVersionUID = 1L;
+	private JPanel jContentPane = null;
+	private JLabel jl_logo = null;
+	private JPanel jp_butons = null;
+	private JLabel jl_user = null;
+	private JLabel jl_senha = null;
+	private JTextField jtf_user = null;
+	private JPasswordField jpf_senha = null;
+	private JButton jb_confirmar = null;
+	private JButton jb_cancelar = null;
+	private Facade facade;  //  @jve:decl-index=0:
+	/**
+	 * This is the default constructor
+	 */
+	public LoginSigic() {
+		super();
+		initialize();
+	}
+
+	public static void main(String[] args) {
+		LoginSigic loginSigic = new LoginSigic();
+		loginSigic.setLocationRelativeTo(null);
+		loginSigic.setVisible(true);
+	}
+	/**
+	 * This method initializes this
+	 * 
+	 * @return void
+	 */
+	private void initialize() {
+		this.setSize(569, 431);
+		this.setContentPane(getJContentPane());
+		this.setTitle("Sistema de Gerenciamento da ICB em São Lourenço da Mata");
+	}
+
+	public Facade getFacade(){
+		if(this.facade==null){
+			this.facade = new Facade();
+			return this.facade;
+		}
+
+		return this.facade;
+	}
+
+	/**
+	 * This method initializes jContentPane
+	 * 
+	 * @return javax.swing.JPanel
+	 */
+	private JPanel getJContentPane() {
+		if (jContentPane == null) {
+			jl_logo = new JLabel();
+			jl_logo.setBounds(new Rectangle(1, -5, 559, 304));
+			jl_logo.setDisplayedMnemonic(KeyEvent.VK_UNDEFINED);
+			jl_logo.setIcon(new ImageIcon("D:/workspace ganymede/sigic-v1.1/imagens/logo2.jpg"));
+			jl_logo.setText("");
+			jContentPane = new JPanel();
+			jContentPane.setLayout(null);
+			jContentPane.add(jl_logo, null);
+			jContentPane.add(getJp_butons(), null);
+		}
+		return jContentPane;
+	}
+
+	/**
+	 * This method initializes jp_butons	
+	 * 	
+	 * @return javax.swing.JPanel	
+	 */
+	private JPanel getJp_butons() {
+		if (jp_butons == null) {
+			jl_senha = new JLabel();
+			jl_senha.setBounds(new Rectangle(51, 58, 39, 16));
+			jl_senha.setText("Senha:");
+			jl_user = new JLabel();
+			jl_user.setBounds(new Rectangle(51, 21, 47, 16));
+			jl_user.setText("Usuário:");
+			jp_butons = new JPanel();
+			jp_butons.setLayout(null);
+			jp_butons.setBounds(new Rectangle(2, 299, 550, 95));
+			jp_butons.setBorder(BorderFactory.createLineBorder(new Color(39, 107, 193), 5));
+			jp_butons.add(jl_user, null);
+			jp_butons.add(jl_senha, null);
+			jp_butons.add(getJtf_user(), null);
+			jp_butons.add(getJpf_senha(), null);
+			jp_butons.add(getJb_confirmar(), null);
+			jp_butons.add(getJb_cancelar(), null);
+		}
+		return jp_butons;
+	}
+
+	/**
+	 * This method initializes jtf_user	
+	 * 	
+	 * @return javax.swing.JTextField	
+	 */
+	private JTextField getJtf_user() {
+		if (jtf_user == null) {
+			jtf_user = new JTextField();
+			jtf_user.setBounds(new Rectangle(115, 21, 157, 21));
+		}
+		return jtf_user;
+	}
+
+	/**
+	 * This method initializes jpf_senha	
+	 * 	
+	 * @return javax.swing.JPasswordField	
+	 */
+	private JPasswordField getJpf_senha() {
+		if (jpf_senha == null) {
+			jpf_senha = new JPasswordField();
+			jpf_senha.setBounds(new Rectangle(116, 58, 155, 21));
+		}
+		return jpf_senha;
+	}
+
+	/**
+	 * This method initializes jb_confirmar	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getJb_confirmar() {
+		if (jb_confirmar == null) {
+			jb_confirmar = new JButton();
+			jb_confirmar.setBounds(new Rectangle(316, 21, 142, 20));
+			jb_confirmar.setText("Confirmar");
+			jb_confirmar.addActionListener(new java.awt.event.ActionListener(){
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					JFrame frame = confirmar();
+					if(frame!=null){
+						fechar();
+						frame.setLocationRelativeTo(null);
+						frame.setVisible(true);
+					}
+				}
+			});
+		}
+		return jb_confirmar;
+	}
+
+	@SuppressWarnings("deprecation")
+	private JFrame confirmar(){
+
+		try {
+			String usuario = this.jtf_user.getText();
+			String senha = this.jpf_senha.getText();
+			Usuario user = this.getFacade().findUsuario(usuario);
+
+			if(user.getSenha().equals(senha)){
+				return this.factoryGui(user.getNivel());
+			}
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UsuarioNoRegisteredException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private JFrame factoryGui(int nivel){
+
+		if(nivel == 1){
+			return new MainUserModify();
+		}else{
+			return new MainUsersViewer();
+		}
+	}
+
+	/**
+	 * This method initializes jb_cancelar	
+	 * 	
+	 * @return javax.swing.JButton	
+	 */
+	private JButton getJb_cancelar() {
+		if (jb_cancelar == null) {
+			jb_cancelar = new JButton();
+			jb_cancelar.setBounds(new Rectangle(317, 58, 142, 20));
+			jb_cancelar.setText("Cancelar");
+			jb_cancelar.addActionListener(new java.awt.event.ActionListener() {
+				public void actionPerformed(java.awt.event.ActionEvent e) {
+					fechar();
+				}
+			});
+		}
+		return jb_cancelar;
+	}
+
+	private void fechar(){
+		this.dispose();
+	}
+
+}  //  @jve:decl-index=0:visual-constraint="222,6"
+
+
