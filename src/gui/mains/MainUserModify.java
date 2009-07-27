@@ -1,7 +1,14 @@
-package gui;
+package gui.mains;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -16,25 +23,25 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import com.lowagie.text.DocumentException;
-
 import mem.exception.InvalidDateException;
+import mem.interfaces.IMainFrame;
 import mem.model.integrantesIg.IntegranteIgreja;
 import mem.model.integrantesIg.IntegrantesIgrejaTypes;
 import mem.model.relatorio.RelatorioIntegrantesIgreja;
-
 import util.ConstantsSystem;
 
-import facade.Facade;
-import java.awt.Toolkit;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.sql.SQLException;
-import java.util.Iterator;
-import java.util.LinkedList;
+import com.lowagie.text.DocumentException;
 
-public class MainFrame extends JFrame {
+import facade.Facade;
+import gui.Aniversariantes;
+import gui.PanelCargos;
+import gui.PanelDepartamentos;
+import gui.PanelIntegrantesIgreja;
+import gui.ProcurarMembro;
+import gui.TelaInicial;
+import gui.ViewDepartment;
+
+public class MainUserModify extends JFrame implements IMainFrame{
 
 	private static final long serialVersionUID = 1L;
 	private JPanel jContentPane = null;
@@ -63,7 +70,7 @@ public class MainFrame extends JFrame {
 	/**
 	 * This is the default constructor
 	 */
-	public MainFrame() {
+	public MainUserModify() {
 		super();
 		initialize();
 	}
@@ -266,7 +273,7 @@ public class MainFrame extends JFrame {
 		}
 	}
 	public static void main(String[] args) {
-		MainFrame main = new MainFrame();
+		MainUserModify main = new MainUserModify();
 		main.setVisible(true);
 	}
 
