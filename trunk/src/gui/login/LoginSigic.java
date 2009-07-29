@@ -24,6 +24,7 @@ import util.ConstantsSystem;
 import mem.exception.UsuarioNoRegisteredException;
 import mem.model.usuarios.Usuario;
 import facade.Facade;
+import gui.mains.MainUserAdm;
 import gui.mains.MainUserModify;
 import gui.mains.MainUsersViewer;
 import java.awt.Toolkit;
@@ -231,8 +232,11 @@ public class LoginSigic extends JFrame {
 	private JFrame factoryGui(int nivel){
 
 		if(nivel == 1){
+			return new MainUserAdm();
+		}else if(nivel == 2){
 			return new MainUserModify();
-		}else{
+		}
+		else{
 			return new MainUsersViewer();
 		}
 	}
