@@ -10,15 +10,23 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.UIManager.LookAndFeelInfo;
+
+import util.ConstantsSystem;
 
 import mem.exception.UsuarioNoRegisteredException;
 import mem.model.usuarios.Usuario;
 import facade.Facade;
 import gui.mains.MainUserModify;
 import gui.mains.MainUsersViewer;
+import java.awt.Toolkit;
 
 public class LoginSigic extends JFrame {
 
@@ -33,6 +41,7 @@ public class LoginSigic extends JFrame {
 	private JButton jb_confirmar = null;
 	private JButton jb_cancelar = null;
 	private Facade facade;  //  @jve:decl-index=0:
+	private LookAndFeelInfo[] looks;
 	/**
 	 * This is the default constructor
 	 */
@@ -41,10 +50,20 @@ public class LoginSigic extends JFrame {
 		initialize();
 	}
 
+	static{
+		try {
+			Class.forName(ConstantsSystem.JDBC_DRIVER);
+		} catch (ClassNotFoundException e) {
+			JOptionPane.showMessageDialog(null,e.getMessage(), "Atenção", JOptionPane.PLAIN_MESSAGE);
+		}
+	}
+	
 	public static void main(String[] args) {
+		
 		LoginSigic loginSigic = new LoginSigic();
 		loginSigic.setLocationRelativeTo(null);
 		loginSigic.setVisible(true);
+		
 	}
 	/**
 	 * This method initializes this
@@ -52,9 +71,29 @@ public class LoginSigic extends JFrame {
 	 * @return void
 	 */
 	private void initialize() {
+		this.looks = UIManager.getInstalledLookAndFeels();
+		try {
+			UIManager.setLookAndFeel(looks[3].getClassName());
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(this,e.getMessage(), "Atenção", JOptionPane.PLAIN_MESSAGE);
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(this,e.getMessage(), "Atenção", JOptionPane.PLAIN_MESSAGE);
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(this,e.getMessage(), "Atenção", JOptionPane.PLAIN_MESSAGE);
+		} catch (UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(this,e.getMessage(), "Atenção", JOptionPane.PLAIN_MESSAGE);
+		}
+		SwingUtilities.updateComponentTreeUI(this);
 		this.setSize(569, 431);
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage("D:/workspace ganymede/sigic-v1.1/imagens/logop4.png"));
+		
 		this.setContentPane(getJContentPane());
 		this.setTitle("Sistema de Gerenciamento da ICB em São Lourenço da Mata");
+		this.setResizable(false);
 	}
 
 	public Facade getFacade(){
@@ -101,7 +140,7 @@ public class LoginSigic extends JFrame {
 			jl_user.setText("Usuário:");
 			jp_butons = new JPanel();
 			jp_butons.setLayout(null);
-			jp_butons.setBounds(new Rectangle(2, 299, 550, 95));
+			jp_butons.setBounds(new Rectangle(1, 299, 559, 95));
 			jp_butons.setBorder(BorderFactory.createLineBorder(new Color(39, 107, 193), 5));
 			jp_butons.add(jl_user, null);
 			jp_butons.add(jl_senha, null);
@@ -122,6 +161,7 @@ public class LoginSigic extends JFrame {
 		if (jtf_user == null) {
 			jtf_user = new JTextField();
 			jtf_user.setBounds(new Rectangle(115, 21, 157, 21));
+			
 		}
 		return jtf_user;
 	}
@@ -139,6 +179,9 @@ public class LoginSigic extends JFrame {
 		return jpf_senha;
 	}
 
+	
+	
+	
 	/**
 	 * This method initializes jb_confirmar	
 	 * 	
@@ -151,12 +194,7 @@ public class LoginSigic extends JFrame {
 			jb_confirmar.setText("Confirmar");
 			jb_confirmar.addActionListener(new java.awt.event.ActionListener(){
 				public void actionPerformed(java.awt.event.ActionEvent e) {
-					JFrame frame = confirmar();
-					if(frame!=null){
-						fechar();
-						frame.setLocationRelativeTo(null);
-						frame.setVisible(true);
-					}
+					confirmar();
 				}
 			});
 		}
@@ -172,22 +210,24 @@ public class LoginSigic extends JFrame {
 			Usuario user = this.getFacade().findUsuario(usuario);
 
 			if(user.getSenha().equals(senha)){
+				fechar();
 				return this.factoryGui(user.getNivel());
 			}
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(this,e.getMessage(), "Atenção", JOptionPane.PLAIN_MESSAGE);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(this,e.getMessage(), "Atenção", JOptionPane.PLAIN_MESSAGE);
 		} catch (UsuarioNoRegisteredException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(this,e.getMessage(), "Atenção", JOptionPane.PLAIN_MESSAGE);
 		}
 		return null;
 	}
-
+	
+	/*factoryMethod para a construção de Gui*/
 	private JFrame factoryGui(int nivel){
 
 		if(nivel == 1){
