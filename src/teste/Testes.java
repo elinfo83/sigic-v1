@@ -6,15 +6,13 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Iterator;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
-
-import com.lowagie.text.DocumentException;
 
 import mem.exception.InvalidDateException;
 import mem.model.integrantesIg.IntegranteIgreja;
 import mem.model.relatorio.RelatorioIntegrantesIgreja;
+
+import com.lowagie.text.DocumentException;
 
 import facade.Facade;
 

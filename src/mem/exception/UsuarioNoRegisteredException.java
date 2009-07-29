@@ -9,7 +9,7 @@ public class UsuarioNoRegisteredException extends Exception {
 	
 	
 	public UsuarioNoRegisteredException() {
-		super("Usuario e não Cadastrado!");
+		super("Usuario não Cadastrado!");
 	}
 
 }

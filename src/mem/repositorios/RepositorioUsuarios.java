@@ -62,8 +62,6 @@ public class RepositorioUsuarios implements IRepositorioUsuario {
 		String query = "SELECT * FROM usuariosAut " +
 		"WHERE usuario = '" +usuario +"'";
 		boolean resp = false;
-		System.out.println(query);
-
 		this.connectBank();
 		ResultSet resultSet = this.statement.executeQuery(query);
 		resp = resultSet.next();

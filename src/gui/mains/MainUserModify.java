@@ -19,9 +19,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import mem.exception.InvalidDateException;
 import mem.interfaces.IMainFrame;
@@ -48,7 +45,6 @@ public class MainUserModify extends JFrame implements IMainFrame{
 	private JMenuBar menuprincipal = null;
 	private JMenu jm_cadastros = null;
 	private JMenu jm_visualizar = null;
-	private UIManager.LookAndFeelInfo looks[];
 	private JMenuItem jmi_membros = null;
 	private JMenuItem jmi_departamentos = null;
 	private JTabbedPane jTabbedPane = null;
@@ -272,10 +268,7 @@ public class MainUserModify extends JFrame implements IMainFrame{
 			e.printStackTrace();
 		}
 	}
-	public static void main(String[] args) {
-		MainUserModify main = new MainUserModify();
-		main.setVisible(true);
-	}
+	
 
 	/**
 	 * This method initializes this
@@ -284,23 +277,7 @@ public class MainUserModify extends JFrame implements IMainFrame{
 	 */
 	private void initialize() {
 		this.facade = new Facade();
-		this.looks = UIManager.getInstalledLookAndFeels();
-		try {
-			UIManager.setLookAndFeel(looks[3].getClassName());
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		SwingUtilities.updateComponentTreeUI(this);
+		
 		this.setResizable(false);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage("D:/workspace/sigic-v1.1/imagens/logop4.png"));
 		this.setBackground(new Color(225, 230, 232));
@@ -308,6 +285,9 @@ public class MainUserModify extends JFrame implements IMainFrame{
 		this.setJMenuBar(getMenuprincipal());
 		this.setContentPane(getJContentPane());
 		this.setTitle("SISTEMA INTEGRADO DE GERENCIAMENTO DA ICB em São Lourenço da Mata");
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+		
 	}
 
 	/**
